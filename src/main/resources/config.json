@@ -1,0 +1,11 @@
+{
+  "redis.host": "127.0.0.1",
+  "redis.port": 6379,
+  "redis.password": "CHANGE_ME",
+  "redis.use-pass": false, 
+
+  "scan-rate": 20,
+  "port-min": 30000,
+  "port-max": 31000
+  
+}
