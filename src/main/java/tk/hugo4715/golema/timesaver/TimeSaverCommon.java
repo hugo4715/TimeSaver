@@ -91,13 +91,4 @@ public class TimeSaverCommon implements Closeable {
 
 		return i;
 	}
-
-	
-
-	public void sendServerRequest(ServerRequest sr) {
-		getLogger().info("Requesting a server from playpen (type=" + sr.getType() + ")");
-		try(Jedis j = getJedisAccess().getJedisPool().getResource()){
-			j.publish("TS:PLAYPEN", getGson().toJson(sr));//TODO actually use that to create servers in playpen
-		}
-	}
 }
