@@ -21,13 +21,17 @@ public class Balancer extends Thread{
 					int available = 0;
 					
 					for(ServerInfo info : infos) {
-						if(info.getGame() != null && info.getGame().equals(gi.name) && info.isJoinable() && info.getCurrentPlayers() < info.getMaxPlayers()){
+						if(info != null && info.getGame() != null && info.getGame().equals(gi.name) && info.isJoinable() && info.getCurrentPlayers() < info.getMaxPlayers()){
 							available++;
 						}
 					}
 					
 					if(available == 0) {
-						TSPlayen.getInstance().startServer(gi.name);
+						try {
+							TSPlayen.getInstance().startServer(gi.name);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
 					}
 				}
 			}

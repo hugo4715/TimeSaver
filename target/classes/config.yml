@@ -4,5 +4,5 @@ redis:
   password: CHANGE_ME
   use-pass: false
   
-server-uuid: <server-uuid>
-coordinator-uuid: <coordinator-uuid>
+server-uuid: <serveruuid>
+coordinator-uuid: <coordinatoruuid>

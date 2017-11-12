@@ -32,6 +32,7 @@ public class UpdateThread implements Runnable {
 				
 				for(String str : ids) {
 					ServerInfo info = TSBungee.getInstance().getCommon().getServer(Integer.valueOf(str));//TODO return null when servers stopped
+					if(info == null || info.getFullName() == null)continue;
 					net.md_5.bungee.api.config.ServerInfo i = ProxyServer.getInstance().constructServerInfo(info.getFullName() , new InetSocketAddress(info.getIp(), info.getPort()), "motd", false);
 					ProxyServer.getInstance().getServers().put(info.getFullName(),i);
 					added.add(info.getFullName());

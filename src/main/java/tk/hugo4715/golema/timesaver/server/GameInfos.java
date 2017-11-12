@@ -4,6 +4,7 @@ public enum GameInfos
     NONE("None"), 
     LOBBY("Lobby"), 
     LOBBY_SKYWARS("LobbySkyWars"), 
+    LOBBY_SKYRUSH("LobbySkyRush"), 
     SKYRUSH("SkyRush"), 
     SKYWARS("SkyWars"), 
     SKYWARS_SOLO_NORMAL("SkyWarsSoloNormal"), 

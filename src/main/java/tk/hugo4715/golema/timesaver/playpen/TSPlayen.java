@@ -59,7 +59,7 @@ public class TSPlayen extends AbstractPlugin {
 		try {
 			common.getLogger().info("Checking if we can start a server of type " + game);
 			P3Package p = PlayPen.get().getPackageManager().resolve(game, "promoted");
-			
+			if(p == null)return;
 			LocalCoordinator choosen = Network.get().selectCoordinator(p);
 			
 			if(choosen == null) {
@@ -71,10 +71,13 @@ public class TSPlayen extends AbstractPlugin {
 			Map<String,String> prop = new HashMap<>();
 			prop.put("port", ""+CoordinatorPort.getAvailablePort(choosen));
 			prop.put("ip", ip.getHostAddress());
+			prop.put("serveruuid", id.toString());
+			prop.put("coordinatoruuid", choosen.getUuid());
 			
-			choosen.createServer(p, game + "-" + id.toString(), prop);
+			Network.get().provision(p, game + "#" + id.toString(), prop, choosen.getName());
+//			choosen.createServer(p, game + "-" + id.toString(), prop);
 			
-			Log.info("Requested server " + game  + " from coordinator " + choosen.getName());
+			common.getLogger().info("Requested server " + game  + " from coordinator " + choosen.getName());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

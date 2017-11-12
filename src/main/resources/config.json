@@ -4,8 +4,5 @@
   "redis.password": "CHANGE_ME",
   "redis.use-pass": false, 
 
-  "scan-rate": 20,
-  "port-min": 30000,
-  "port-max": 31000
-  
+  "scan-rate": 20
 }

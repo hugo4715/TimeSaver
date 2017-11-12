@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import redis.clients.jedis.Jedis;
@@ -29,21 +30,36 @@ public class TSSpigot extends JavaPlugin {
 		saveDefaultConfig();
 
 		JedisCredentials cred = new JedisCredentials(getConfig().getString("redis.host"),
-				getConfig().getInt("redis.port"), getConfig().getString("password"),getConfig().getBoolean("redis.use-pass"));
+				getConfig().getInt("redis.port"), getConfig().getString("redis.password"),getConfig().getBoolean("redis.use-pass"));
 		common = new TimeSaverCommon(getLogger(), cred);
 		
 		idPool = new JedisIdPool(getCommon().getJedisAccess());
-		registerServer();
+		
+		
+		new BukkitRunnable() {
+			
+			@Override
+			public void run() {
+				registerServer();				
+			}
+		}.runTaskLater(this, 5*20);
 	}
 
 	private void registerServer() {
 		// create basic server infos, they should be modified by game plugins in order
 		// to set the server game map and infos
-		
-		UUID uuid = UUID.fromString(getConfig().getString("server-uuid"));
-		UUID coordinator = UUID.fromString(getConfig().getString("coordinator-uuid"));
-		currentServerInfos = new ServerInfo(ServerType.NONE, idPool.nextId(), Bukkit.getMaxPlayers(), Bukkit.getOnlinePlayers().size(), Bukkit.getIp(), Bukkit.getPort(), uuid, coordinator, ServerStatus.REBOOT, "None", null, true, WhiteListType.NONE, null);
+		try {
+			UUID uuid = UUID.fromString(getConfig().getString("server-uuid"));
+			UUID coordinator = UUID.fromString(getConfig().getString("coordinator-uuid"));
+			currentServerInfos = new ServerInfo(ServerType.NONE, idPool.nextId(), Bukkit.getMaxPlayers(), Bukkit.getOnlinePlayers().size(), Bukkit.getIp(), Bukkit.getPort(), uuid, coordinator, ServerStatus.REBOOT, "None", null, true, WhiteListType.NONE, null);
 
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			currentServerInfos = new ServerInfo(ServerType.NONE, idPool.nextId(), Bukkit.getMaxPlayers(), Bukkit.getOnlinePlayers().size(), Bukkit.getIp(), Bukkit.getPort(), UUID.randomUUID(), UUID.randomUUID(), ServerStatus.REBOOT, "None", null, true, WhiteListType.NONE, null);
+			
+		}
+		
 		// launch hearthbeat runnable
 		heartBeatTask = new HeartBeatRunnable().runTaskTimerAsynchronously(this, 20, 20);
 	}
