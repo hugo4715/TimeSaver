@@ -4,7 +4,6 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import redis.clients.jedis.Jedis;
@@ -34,29 +33,20 @@ public class TSSpigot extends JavaPlugin {
 		common = new TimeSaverCommon(getLogger(), cred);
 		
 		idPool = new JedisIdPool(getCommon().getJedisAccess());
-		
-		
-		new BukkitRunnable() {
-			
-			@Override
-			public void run() {
-				registerServer();				
-			}
-		}.runTaskLater(this, 5*20);
 	}
 
-	private void registerServer() {
+	public void registerServer(ServerType serverType) {
 		// create basic server infos, they should be modified by game plugins in order
 		// to set the server game map and infos
 		try {
 			UUID uuid = UUID.fromString(getConfig().getString("server-uuid"));
 			UUID coordinator = UUID.fromString(getConfig().getString("coordinator-uuid"));
-			currentServerInfos = new ServerInfo(ServerType.NONE, idPool.nextId(), Bukkit.getMaxPlayers(), Bukkit.getOnlinePlayers().size(), Bukkit.getIp(), Bukkit.getPort(), uuid, coordinator, ServerStatus.REBOOT, "None", null, true, WhiteListType.NONE, null);
+			currentServerInfos = new ServerInfo(serverType, idPool.nextId(), Bukkit.getMaxPlayers(), Bukkit.getOnlinePlayers().size(), Bukkit.getIp(), Bukkit.getPort(), uuid, coordinator, ServerStatus.REBOOT, "None", null, true, WhiteListType.NONE, null);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			currentServerInfos = new ServerInfo(ServerType.NONE, idPool.nextId(), Bukkit.getMaxPlayers(), Bukkit.getOnlinePlayers().size(), Bukkit.getIp(), Bukkit.getPort(), UUID.randomUUID(), UUID.randomUUID(), ServerStatus.REBOOT, "None", null, true, WhiteListType.NONE, null);
+			currentServerInfos = new ServerInfo(serverType, idPool.nextId(), Bukkit.getMaxPlayers(), Bukkit.getOnlinePlayers().size(), Bukkit.getIp(), Bukkit.getPort(), UUID.randomUUID(), UUID.randomUUID(), ServerStatus.REBOOT, "None", null, true, WhiteListType.NONE, null);
 			
 		}
 		

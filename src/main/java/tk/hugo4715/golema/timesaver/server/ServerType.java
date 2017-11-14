@@ -36,5 +36,4 @@ public enum ServerType
         }
         return null;
     }
-    
 }

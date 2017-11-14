@@ -51,12 +51,6 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>io.playpen</groupId>
-      <artifactId>PlayPen</artifactId>
-      <version>1.0</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
       <groupId>spigot</groupId>
       <artifactId>spigot</artifactId>
       <version>1.0</version>
@@ -69,6 +63,13 @@
       <version>1.0</version>
       <scope>system</scope>
       <systemPath>${project.basedir}/lib/bungeecord-1278.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>playpen</groupId>
+      <artifactId>playpen</artifactId>
+      <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/PlayPen-1.0.jar</systemPath>
     </dependency>
   </dependencies>
   <properties>

@@ -13,39 +13,44 @@ import tk.hugo4715.golema.timesaver.server.ServerInfo;
 public class UpdateThread implements Runnable {
 
 	private AtomicBoolean running = new AtomicBoolean(true);
-	
+
 	private Set<String> added = new HashSet<>();
-	
+
 	@SuppressWarnings("static-access")
 	@Override
 	public void run() {
-		while(this.running.get()) {
+		while (this.running.get()) {
 			try (Jedis j = TSBungee.getInstance().getCommon().getJedisAccess().getJedisPool().getResource()) {
-				
+
 				Set<String> ids = j.smembers("TS:IDPOOL");
-				if(ids == null)return;
-				
-				for(String str : added) {
+				if (ids == null)
+					return;
+
+				for (String str : added) {
 					ProxyServer.getInstance().getServers().remove(str);
 				}
-				
-				for(String str : ids) {
-					ServerInfo info = TSBungee.getInstance().getCommon().getServer(Integer.valueOf(str));//TODO return null when servers stopped
-					if(info == null || info.getFullName() == null)continue;
-					net.md_5.bungee.api.config.ServerInfo i = ProxyServer.getInstance().constructServerInfo(info.getFullName() , new InetSocketAddress(info.getIp(), info.getPort()), "motd", false);
-					ProxyServer.getInstance().getServers().put(info.getFullName(),i);
+
+				for (String str : ids) {
+					ServerInfo info = TSBungee.getInstance().getCommon().getServer(Integer.valueOf(str));// TODO return
+																											// null when
+																											// servers
+																											// stopped
+					if (info == null || info.getFullName() == null)
+						continue;
+					net.md_5.bungee.api.config.ServerInfo i = ProxyServer.getInstance().constructServerInfo(
+							info.getFullName(), new InetSocketAddress(info.getIp(), info.getPort()), "motd", false);
+					ProxyServer.getInstance().getServers().put(info.getFullName(), i);
 					added.add(info.getFullName());
 				}
 			}
-			
-			
+
 			try {
 				Thread.currentThread().sleep(3000);
-			} catch (InterruptedException e) {}
+			} catch (InterruptedException e) {
+			}
 		}
 	}
-	
-	
+
 	public void stop() {
 		running.set(false);
 		Thread.currentThread().interrupt();
