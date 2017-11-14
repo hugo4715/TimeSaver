@@ -22,6 +22,7 @@ public class TSBungee extends Plugin {
 	private TimeSaverCommon common;
 	private UpdateThread updateThread;
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onEnable() {
 		instance = this;

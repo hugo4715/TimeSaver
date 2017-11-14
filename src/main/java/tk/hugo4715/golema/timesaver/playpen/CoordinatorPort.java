@@ -1,8 +1,6 @@
 package tk.hugo4715.golema.timesaver.playpen;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import io.playpen.core.coordinator.network.LocalCoordinator;

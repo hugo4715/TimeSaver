@@ -14,7 +14,6 @@ import io.playpen.core.coordinator.network.LocalCoordinator;
 import io.playpen.core.coordinator.network.Network;
 import io.playpen.core.p3.P3Package;
 import io.playpen.core.plugin.AbstractPlugin;
-import jline.internal.Log;
 import tk.hugo4715.golema.timesaver.TimeSaverCommon;
 import tk.hugo4715.golema.timesaver.jedis.JedisCredentials;
 import tk.hugo4715.golema.timesaver.util.SingleLineFormatter;
@@ -26,6 +25,7 @@ public class TSPlayen extends AbstractPlugin {
 
 	private Balancer balancer;
 	
+	@SuppressWarnings("unused")
 	private CoordinatorPort coordinatorInfos;
 	
 	@Override

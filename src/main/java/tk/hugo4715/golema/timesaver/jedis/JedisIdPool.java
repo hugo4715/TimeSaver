@@ -1,6 +1,6 @@
 package tk.hugo4715.golema.timesaver.jedis;
 
-import java.util.Set;import java.util.stream.Collector;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import redis.clients.jedis.Jedis;

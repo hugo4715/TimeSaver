@@ -13,6 +13,7 @@ import tk.hugo4715.golema.timesaver.TimeSaverCommon;
 public class JedisAccess implements Closeable {
 	
 	private JedisPool jedisPool;
+	@SuppressWarnings("unused")
 	private TimeSaverCommon tsc;
 
 	public JedisAccess(TimeSaverCommon tsc, JedisCredentials credentials) {

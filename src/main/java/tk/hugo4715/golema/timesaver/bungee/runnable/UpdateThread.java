@@ -5,8 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.apache.commons.lang.Validate;
-
 import net.md_5.bungee.api.ProxyServer;
 import redis.clients.jedis.Jedis;
 import tk.hugo4715.golema.timesaver.bungee.TSBungee;
@@ -18,6 +16,7 @@ public class UpdateThread implements Runnable {
 	
 	private Set<String> added = new HashSet<>();
 	
+	@SuppressWarnings("static-access")
 	@Override
 	public void run() {
 		while(this.running.get()) {

@@ -52,11 +52,12 @@
 			<version>2.4.2</version>
 		</dependency>
 
-		<dependency>
-			<groupId>io.playpen</groupId>
-			<artifactId>PlayPen</artifactId>
+		<dependency> 
+			<groupId>playpen</groupId>
+			<artifactId>playpen</artifactId>
 			<version>1.0</version>
-			<scope>provided</scope>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/PlayPen-1.0.jar</systemPath>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -16,7 +15,6 @@ import redis.clients.jedis.Pipeline;
 import redis.clients.jedis.Response;
 import tk.hugo4715.golema.timesaver.jedis.JedisAccess;
 import tk.hugo4715.golema.timesaver.jedis.JedisCredentials;
-import tk.hugo4715.golema.timesaver.request.ServerRequest;
 import tk.hugo4715.golema.timesaver.server.ServerInfo;
 
 public class TimeSaverCommon implements Closeable {
