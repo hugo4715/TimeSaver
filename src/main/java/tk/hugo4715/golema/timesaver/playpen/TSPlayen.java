@@ -25,9 +25,6 @@ public class TSPlayen extends AbstractPlugin {
 
 	private Balancer balancer;
 	
-	@SuppressWarnings("unused")
-	private CoordinatorPort coordinatorInfos;
-	
 	@Override
 	public boolean onStart() {
 		instance = this;
@@ -63,7 +60,7 @@ public class TSPlayen extends AbstractPlugin {
 			LocalCoordinator choosen = Network.get().selectCoordinator(p);
 			
 			if(choosen == null) {
-				common.getLogger().severe("No coordinator found! Can't start any server");
+				common.getLogger().severe("No available coordinator found! Can't start any server");
 				return;
 			}
 			UUID id = UUID.randomUUID();
@@ -75,10 +72,10 @@ public class TSPlayen extends AbstractPlugin {
 			prop.put("coordinatoruuid", choosen.getUuid());
 			
 			Network.get().provision(p, game + "#" + id.toString(), prop, choosen.getName());
-//			choosen.createServer(p, game + "-" + id.toString(), prop);
 			
 			common.getLogger().info("Requested server " + game  + " from coordinator " + choosen.getName());
 		} catch (Exception e) {
+			System.err.println("Error while trying to start a server! Tracktrace below");
 			e.printStackTrace();
 		}
 

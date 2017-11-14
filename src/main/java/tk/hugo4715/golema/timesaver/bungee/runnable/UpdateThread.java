@@ -16,7 +16,6 @@ public class UpdateThread implements Runnable {
 
 	private Set<String> added = new HashSet<>();
 
-	@SuppressWarnings("static-access")
 	@Override
 	public void run() {
 		while (this.running.get()) {
@@ -31,14 +30,11 @@ public class UpdateThread implements Runnable {
 				}
 
 				for (String str : ids) {
-					ServerInfo info = TSBungee.getInstance().getCommon().getServer(Integer.valueOf(str));// TODO return
-																											// null when
-																											// servers
-																											// stopped
+					ServerInfo info = TSBungee.getInstance().getCommon().getServer(Integer.valueOf(str));
 					if (info == null || info.getFullName() == null)
 						continue;
-					net.md_5.bungee.api.config.ServerInfo i = ProxyServer.getInstance().constructServerInfo(
-							info.getFullName(), new InetSocketAddress(info.getIp(), info.getPort()), "motd", false);
+					
+					net.md_5.bungee.api.config.ServerInfo i = ProxyServer.getInstance().constructServerInfo(info.getFullName(), new InetSocketAddress(info.getIp(), info.getPort()), "motd", false);
 					ProxyServer.getInstance().getServers().put(info.getFullName(), i);
 					added.add(info.getFullName());
 				}

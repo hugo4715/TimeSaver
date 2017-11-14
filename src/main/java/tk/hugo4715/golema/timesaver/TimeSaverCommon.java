@@ -25,7 +25,7 @@ public class TimeSaverCommon implements Closeable {
 
 	public TimeSaverCommon(Logger log, JedisCredentials c) {
 		this.logger = log;
-		this.jedisAccess = new JedisAccess(this, c);
+		this.jedisAccess = new JedisAccess(c);
 	}
 
 	public void close() throws IOException {

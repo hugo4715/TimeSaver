@@ -27,8 +27,7 @@ public class TSSpigot extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		saveDefaultConfig();
-		JedisCredentials cred = new JedisCredentials(getConfig().getString("redis.host"),
-				getConfig().getInt("redis.port"), getConfig().getString("redis.password"),getConfig().getBoolean("redis.use-pass"));
+		JedisCredentials cred = new JedisCredentials(getConfig().getString("redis.host"),getConfig().getInt("redis.port"), getConfig().getString("redis.password"),getConfig().getBoolean("redis.use-pass"));
 		common = new TimeSaverCommon(getLogger(), cred);
 		idPool = new JedisIdPool(getCommon().getJedisAccess());
 		registerServer();
@@ -40,14 +39,11 @@ public class TSSpigot extends JavaPlugin {
 		try {
 			UUID uuid = UUID.fromString(getConfig().getString("server-uuid"));
 			UUID coordinator = UUID.fromString(getConfig().getString("coordinator-uuid"));
-			currentServerInfos = new ServerInfo(ServerType.NONE, idPool.nextId(), Bukkit.getMaxPlayers(), Bukkit.getOnlinePlayers().size(), Bukkit.getIp(), Bukkit.getPort(), uuid, coordinator,
-					ServerStatus.REBOOT, "None", null, true, WhiteListType.NONE, null);
+			currentServerInfos = new ServerInfo(ServerType.NONE, idPool.nextId(), Bukkit.getMaxPlayers(), Bukkit.getOnlinePlayers().size(), Bukkit.getIp(), Bukkit.getPort(), uuid, coordinator,ServerStatus.REBOOT, "None", null, true, WhiteListType.NONE, null);
 
 		} catch (Exception e) {
 			System.out.println("[Coordinator] Erreur des UUIDS.");
-			currentServerInfos = new ServerInfo(ServerType.NONE, idPool.nextId(), Bukkit.getMaxPlayers(), Bukkit.getOnlinePlayers().size(), Bukkit.getIp(), Bukkit.getPort(), UUID.randomUUID(),
-					UUID.randomUUID(), ServerStatus.REBOOT, "None", null, true, WhiteListType.NONE, null);
-			
+			currentServerInfos = new ServerInfo(ServerType.NONE, idPool.nextId(), Bukkit.getMaxPlayers(), Bukkit.getOnlinePlayers().size(), Bukkit.getIp(), Bukkit.getPort(), UUID.randomUUID(),UUID.randomUUID(), ServerStatus.REBOOT, "None", null, true, WhiteListType.NONE, null);
 		}
 		
 		// launch hearthbeat runnable
@@ -57,15 +53,15 @@ public class TSSpigot extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		heartBeatTask.cancel();
-		idPool.returnId(getCurrentServerInfos().getId());
 		unregisterServer();
+		idPool.returnId(getCurrentServerInfos().getId());
 	}
 
 	private void unregisterServer() {
 		try (Jedis j = getCommon().getJedisAccess().getJedisPool().getResource()) {
 			String key = "TS:SERVERS:" + TSSpigot.get().getCurrentServerInfos().getId();
 			j.del(key);
-			j.srem(key, getCurrentServerInfos().getId()+"");
+			j.srem(key, String.valueOf(getCurrentServerInfos().getId()));
 		}
 	}
 

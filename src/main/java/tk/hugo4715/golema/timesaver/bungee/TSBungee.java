@@ -28,8 +28,7 @@ public class TSBungee extends Plugin {
 		instance = this;
 		loadConfig();
 		
-		JedisCredentials cred = new JedisCredentials(config.getString("redis.host"),
-				config.getInt("redis.port"), config.getString("password"),config.getBoolean("redis.use-pass"));
+		JedisCredentials cred = new JedisCredentials(config.getString("redis.host"),config.getInt("redis.port"), config.getString("password"),config.getBoolean("redis.use-pass"));
 		common = new TimeSaverCommon(getLogger(), cred);
 		
 		updateThread = new UpdateThread();

@@ -13,11 +13,8 @@ import tk.hugo4715.golema.timesaver.TimeSaverCommon;
 public class JedisAccess implements Closeable {
 	
 	private JedisPool jedisPool;
-	@SuppressWarnings("unused")
-	private TimeSaverCommon tsc;
 
-	public JedisAccess(TimeSaverCommon tsc, JedisCredentials credentials) {
-		this.tsc = tsc;
+	public JedisAccess(JedisCredentials credentials) {
 		JedisPoolConfig poolConfig = new JedisPoolConfig();
 		if(credentials.isUsePass())	jedisPool = new JedisPool(poolConfig, credentials.getHost(), credentials.getPort(), 3000, credentials.getPassword());
 		else jedisPool = new JedisPool(poolConfig, credentials.getHost(), credentials.getPort(), 3000);
