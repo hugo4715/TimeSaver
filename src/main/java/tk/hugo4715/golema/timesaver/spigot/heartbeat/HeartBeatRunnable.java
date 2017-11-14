@@ -15,11 +15,10 @@ public class HeartBeatRunnable extends BukkitRunnable {
 		try (Jedis j = TSSpigot.get().getCommon().getJedisAccess().getJedisPool().getResource()) {
 			TSSpigot.get().getCurrentServerInfos().setCurrentPlayers(Bukkit.getOnlinePlayers().size());
 			TSSpigot.get().getCurrentServerInfos().setMaxPlayers(Bukkit.getMaxPlayers());
-			
+
 			String key = "TS:SERVERS:" + TSSpigot.get().getCurrentServerInfos().getId();
 			j.set(key, TSSpigot.get().getCommon().getGson().toJson(TSSpigot.get().getCurrentServerInfos()));
 			j.expire(key, 60);
 		}
 	}
-
 }

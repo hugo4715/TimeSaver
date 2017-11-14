@@ -19,7 +19,7 @@ import tk.hugo4715.golema.timesaver.spigot.heartbeat.HeartBeatRunnable;
 public class TSSpigot extends JavaPlugin {
 	
 	private TimeSaverCommon common;
-	private  ServerInfo currentServerInfos;
+	private ServerInfo currentServerInfos;
 	private JedisIdPool idPool;
 	
 	private BukkitTask heartBeatTask;
@@ -27,26 +27,26 @@ public class TSSpigot extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		saveDefaultConfig();
-
 		JedisCredentials cred = new JedisCredentials(getConfig().getString("redis.host"),
 				getConfig().getInt("redis.port"), getConfig().getString("redis.password"),getConfig().getBoolean("redis.use-pass"));
 		common = new TimeSaverCommon(getLogger(), cred);
-		
 		idPool = new JedisIdPool(getCommon().getJedisAccess());
+		registerServer();
 	}
 
-	public void registerServer(ServerType serverType) {
+	public void registerServer() {
 		// create basic server infos, they should be modified by game plugins in order
 		// to set the server game map and infos
 		try {
 			UUID uuid = UUID.fromString(getConfig().getString("server-uuid"));
 			UUID coordinator = UUID.fromString(getConfig().getString("coordinator-uuid"));
-			currentServerInfos = new ServerInfo(serverType, idPool.nextId(), Bukkit.getMaxPlayers(), Bukkit.getOnlinePlayers().size(), Bukkit.getIp(), Bukkit.getPort(), uuid, coordinator, ServerStatus.REBOOT, "None", null, true, WhiteListType.NONE, null);
+			currentServerInfos = new ServerInfo(ServerType.NONE, idPool.nextId(), Bukkit.getMaxPlayers(), Bukkit.getOnlinePlayers().size(), Bukkit.getIp(), Bukkit.getPort(), uuid, coordinator,
+					ServerStatus.REBOOT, "None", null, true, WhiteListType.NONE, null);
 
 		} catch (Exception e) {
-			e.printStackTrace();
-			
-			currentServerInfos = new ServerInfo(serverType, idPool.nextId(), Bukkit.getMaxPlayers(), Bukkit.getOnlinePlayers().size(), Bukkit.getIp(), Bukkit.getPort(), UUID.randomUUID(), UUID.randomUUID(), ServerStatus.REBOOT, "None", null, true, WhiteListType.NONE, null);
+			System.out.println("[Coordinator] Erreur des UUIDS.");
+			currentServerInfos = new ServerInfo(ServerType.NONE, idPool.nextId(), Bukkit.getMaxPlayers(), Bukkit.getOnlinePlayers().size(), Bukkit.getIp(), Bukkit.getPort(), UUID.randomUUID(),
+					UUID.randomUUID(), ServerStatus.REBOOT, "None", null, true, WhiteListType.NONE, null);
 			
 		}
 		
