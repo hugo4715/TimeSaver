@@ -62,7 +62,7 @@
       <artifactId>bungeecord</artifactId>
       <version>1.0</version>
       <scope>system</scope>
-      <systemPath>${project.basedir}/lib/bungeecord-1278.jar</systemPath>
+      <systemPath>${project.basedir}/lib/BungeeCord-1278.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>playpen</groupId>

@@ -45,23 +45,23 @@ public class TimeSaverCommon implements Closeable {
 	}
 
 	public ServerInfo getServer(int id) {
-		try(Jedis j = getJedisAccess().getJedisPool().getResource()){
+		try (Jedis j = getJedisAccess().getJedisPool().getResource()) {
 			String value = j.get("TS:SERVERS:" + id);
 			return getGson().fromJson(value, ServerInfo.class);
 		}
 	}
 
-	public List<ServerInfo> getAllServers(){
+	public List<ServerInfo> getAllServers() {
 		List<ServerInfo> s = new ArrayList<>();
 
-		try(Jedis j = getJedisAccess().getJedisPool().getResource()){
+		try (Jedis j = getJedisAccess().getJedisPool().getResource()) {
 			Set<String> ids = j.smembers("TS:IDPOOL");
-			if(ids != null) {
+			if (ids != null) {
 				int[] i = new int[ids.size()];
 				for (int k = 0; k < i.length; k++) {
 					i[k] = Integer.valueOf(k);
 				}
-				
+
 				s.addAll(getServer(i));
 			}
 		}
@@ -69,20 +69,21 @@ public class TimeSaverCommon implements Closeable {
 	}
 
 	public List<ServerInfo> getServer(int... ids) {
-		if(ids.length == 0)return new ArrayList<>();
-		
+		if (ids.length == 0)
+			return new ArrayList<>();
+
 		List<ServerInfo> i = new ArrayList<>();
 
-		try(Jedis j = getJedisAccess().getJedisPool().getResource()){
+		try (Jedis j = getJedisAccess().getJedisPool().getResource()) {
 			Pipeline p = j.pipelined();
 
 			List<Response<String>> r = new ArrayList<>();
-			for(int id : ids) {
+			for (int id : ids) {
 				r.add(p.get("TS:SERVERS:" + id));
 			}
 			p.sync();
 
-			for(Response<String> s : r) {
+			for (Response<String> s : r) {
 				i.add(getGson().fromJson(s.get(), ServerInfo.class));
 			}
 		}

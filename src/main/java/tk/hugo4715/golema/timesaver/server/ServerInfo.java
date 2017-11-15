@@ -7,6 +7,7 @@ import java.util.UUID;
  * spigot or anything
  */
 public class ServerInfo {
+
 	private ServerType type;
 	private int id;
 	private int maxPlayers;
@@ -16,7 +17,7 @@ public class ServerInfo {
 	private UUID uuid;
 	private UUID coordinatorUUID;
 	private ServerStatus status = ServerStatus.NONE;
-	private String game;
+	private GameInfos gameInfos;
 	private String map;
 	private boolean isJoinable;
 	private WhiteListType whitelistType;
@@ -24,7 +25,7 @@ public class ServerInfo {
 	private String hostName;
 
 	public ServerInfo(ServerType type, int id, int maxPlayers, int currentPlayers, String ip, int port, UUID uuid,
-			UUID coordinatorUUID, ServerStatus status, String game, String map, boolean isJoinable,
+			UUID coordinatorUUID, ServerStatus status, GameInfos gameInfos, String map, boolean isJoinable,
 			WhiteListType whitelistType, String hostName) {
 		this.type = type;
 		this.id = id;
@@ -35,7 +36,7 @@ public class ServerInfo {
 		this.uuid = uuid;
 		this.coordinatorUUID = coordinatorUUID;
 		this.status = status;
-		this.game = game;
+		this.gameInfos = gameInfos;
 		this.map = map;
 		this.isJoinable = isJoinable;
 		this.whitelistType = whitelistType;
@@ -114,12 +115,12 @@ public class ServerInfo {
 		this.status = status;
 	}
 
-	public String getGame() {
-		return game;
+	public GameInfos getGameInfos() {
+		return gameInfos;
 	}
 
-	public void setGame(String game) {
-		this.game = game;
+	public void setGameInfos(GameInfos gameInfos) {
+		this.gameInfos = gameInfos;
 	}
 
 	public String getMap() {
@@ -155,6 +156,6 @@ public class ServerInfo {
 	}
 
 	public String getFullName() {
-		return getType() + "-" + getId();
+		return getGameInfos().getName() + "-" + getId();
 	}
 }
