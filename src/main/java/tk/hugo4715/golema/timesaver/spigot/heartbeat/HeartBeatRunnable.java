@@ -25,7 +25,7 @@ public class HeartBeatRunnable extends BukkitRunnable {
 			}
 
 			// Serveur innactif trop longtemps. (timeout)
-			if (inactifTime >= 120) {
+			if (inactifTime == 120) {
 				if (!(TimeSaverAPI.getServerInfoList().isEmpty())) {
 					int serverTypeCount = 0;
 					for (ServerInfo sInfo : TimeSaverAPI.getServerInfoList()) {
@@ -34,7 +34,7 @@ public class HeartBeatRunnable extends BukkitRunnable {
 							serverTypeCount++; }
 					}
 					if (serverTypeCount >= 2) {
-						Bukkit.getServer().shutdown(); }
+						Bukkit.getServer().shutdown(); } else { inactifTime = 0; }
 				}
 			}
 
@@ -49,6 +49,5 @@ public class HeartBeatRunnable extends BukkitRunnable {
 			}
 		}
 		inactifTime++;
-		System.out.println("Serveur innactif depuis : " + inactifTime + "/20");
 	}
 }
