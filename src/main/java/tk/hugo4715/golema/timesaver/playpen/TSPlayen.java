@@ -3,10 +3,13 @@ package tk.hugo4715.golema.timesaver.playpen;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import io.playpen.core.coordinator.CoordinatorMode;
 import io.playpen.core.coordinator.PlayPen;
@@ -60,13 +63,17 @@ public class TSPlayen extends AbstractPlugin {
 			P3Package p = PlayPen.get().getPackageManager().resolve(game, "promoted");
 			if (p == null)
 				return;
-			LocalCoordinator choosen = Network.get().selectCoordinator(p);
+			LocalCoordinator choosen = getBestCoordinator();
 
 			if (choosen == null) {
 				common.getLogger().severe("No available coordinator found! Can't start any server");
 				return;
 			}
 			UUID id = UUID.randomUUID();
+			if (choosen.getChannel() == null)
+				throw new RuntimeException("");
+			if (choosen.getChannel().remoteAddress() == null)
+				throw new RuntimeException("");
 			InetAddress ip = ((InetSocketAddress) choosen.getChannel().remoteAddress()).getAddress();
 			Map<String, String> prop = new HashMap<>();
 			prop.put("port", "" + CoordinatorPort.getAvailablePort(choosen));
@@ -82,6 +89,12 @@ public class TSPlayen extends AbstractPlugin {
 			e.printStackTrace();
 		}
 
+	}
+
+	public LocalCoordinator getBestCoordinator() {
+		Random r = new Random();
+		List<LocalCoordinator> l = Network.get().getCoordinators().values().stream().collect(Collectors.toList());
+		return Network.get().getCoordinator(l.get(r.nextInt(l.size())).getKeyName());
 	}
 
 	public TimeSaverCommon getCommon() {
