@@ -1,43 +1,45 @@
 package tk.hugo4715.golema.timesaver.playpen;
 
-import java.util.List;
-
 import org.json.JSONException;
 
 import tk.hugo4715.golema.timesaver.server.GameInfos;
 import tk.hugo4715.golema.timesaver.server.ServerInfo;
 
-public class Balancer extends Thread{
+@SuppressWarnings("static-access")
+public class Balancer extends Thread {
+	
+	public Balancer() {}
+	
 	@Override
 	public void run() {
-		while(!this.isInterrupted()) {
-			
-			List<ServerInfo> infos = TSPlayen.getInstance().getCommon().getAllServers();
-			
-			for(GameInfos gi : GameInfos.values()) {
-				
-				if(!gi.equals(GameInfos.NONE)) {
+		while (!(this.isInterrupted())) {
+			int requestServer = 0;
+			int maxRequest = 4;
+			for (GameInfos gi : GameInfos.values()) {
+				if ((!(gi.equals(GameInfos.NONE))) && (requestServer < maxRequest)) {
 					int available = 0;
-					
-					for(ServerInfo info : infos) {
-						if(info != null && info.getGame() != null && info.getGame().equals(gi.name) && info.isJoinable() && info.getCurrentPlayers() < info.getMaxPlayers()){
-							available++;
+					for (ServerInfo info : TSPlayen.getInstance().getCommon().getAllServers()) {
+						if ((info != null) && (info.getGameInfos().getName() != null)
+								&& (info.getGameInfos().getName().equalsIgnoreCase(gi.getName())) && (info.isJoinable())
+								&& (info.getCurrentPlayers() < info.getMaxPlayers())) {
+							available = available + 1;
 						}
 					}
-					
-					if(available == 0) {
+					if ((available == 0) && (requestServer < maxRequest)) {
 						try {
 							TSPlayen.getInstance().startServer(gi.name);
+							requestServer = requestServer + 1;
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
 					}
 				}
 			}
-			
 			try {
-				sleep(TSPlayen.getInstance().getConfig().getInt("scan-rate")*1000);
-			} catch (JSONException | InterruptedException e) {
+				this.sleep(20 * 1000);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}

@@ -1,29 +1,21 @@
 package tk.hugo4715.golema.timesaver.playpen;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import io.playpen.core.coordinator.network.LocalCoordinator;
-import tk.hugo4715.golema.timesaver.server.ServerInfo;
 
 public class CoordinatorPort {
 	
-	private static int min = 26001;
-	
 	public static int getAvailablePort(LocalCoordinator c) {
-		Set<Integer> used = new HashSet<>();
-		
-		for(ServerInfo si : TSPlayen.getInstance().getCommon().getAllServers()) {
-			if(si != null && si.getCoordinatorUUID() != null && si.getCoordinatorUUID().toString().equals(c.getUuid())) {
+		/*List<Integer> used = new ArrayList<Integer>();
+		for (ServerInfo si : TSPlayen.getInstance().getCommon().getAllServers()) {
+			if ((si != null)) {
 				used.add(si.getPort());
 			}
 		}
-		
-		int i = min;
-		while(used.contains(i)) {
-			i++;
-		}
-		used.add(i);
-		return i;
+		int i = 26001;
+		while (used.contains(i)) {
+			i++; }
+		used.add(i);*/
+		return (int) (Math.random()*(54999 - 26001)) + 26001;
+		//return i;
 	}
 }

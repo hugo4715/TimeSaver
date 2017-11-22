@@ -14,27 +14,28 @@ import tk.hugo4715.golema.timesaver.jedis.JedisCredentials;
 
 public class TSBungee extends Plugin {
 	private static TSBungee instance;
+
 	public static TSBungee getInstance() {
 		return instance;
 	}
-	
+
 	private net.md_5.bungee.config.Configuration config;
 	private TimeSaverCommon common;
 	private UpdateThread updateThread;
-	
+
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onEnable() {
 		instance = this;
 		loadConfig();
-		
-		JedisCredentials cred = new JedisCredentials(config.getString("redis.host"),config.getInt("redis.port"), config.getString("password"),config.getBoolean("redis.use-pass"));
+
+		JedisCredentials cred = new JedisCredentials(config.getString("redis.host"), config.getInt("redis.port"),
+				config.getString("password"), config.getBoolean("redis.use-pass"));
 		common = new TimeSaverCommon(getLogger(), cred);
-		
+
 		updateThread = new UpdateThread();
 		getExecutorService().execute(updateThread);
 	}
-
 
 	private void loadConfig() {
 		if (!getDataFolder().exists())
@@ -51,13 +52,14 @@ public class TSBungee extends Plugin {
 			}
 		}
 		try {
-			config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(getDataFolder(), "config.yml"));
+			config = ConfigurationProvider.getProvider(YamlConfiguration.class)
+					.load(new File(getDataFolder(), "config.yml"));
 		} catch (IOException e) {
 			e.printStackTrace();
 			getLogger().severe("Cannot load config!");
 		}
 	}
-	
+
 	public TimeSaverCommon getCommon() {
 		return common;
 	}
