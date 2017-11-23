@@ -7,9 +7,9 @@ import tk.hugo4715.golema.timesaver.server.ServerInfo;
 
 @SuppressWarnings("static-access")
 public class Balancer extends Thread {
-	
+
 	public Balancer() {}
-	
+
 	@Override
 	public void run() {
 		while (!(this.isInterrupted())) {

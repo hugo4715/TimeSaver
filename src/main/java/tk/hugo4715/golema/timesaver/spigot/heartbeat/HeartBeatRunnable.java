@@ -25,16 +25,20 @@ public class HeartBeatRunnable extends BukkitRunnable {
 			}
 
 			// Serveur innactif trop longtemps. (timeout)
-			if (inactifTime == 120) {
+			if (inactifTime == 30) {
 				if (!(TimeSaverAPI.getServerInfoList().isEmpty())) {
 					int serverTypeCount = 0;
 					for (ServerInfo sInfo : TimeSaverAPI.getServerInfoList()) {
 						if ((sInfo != null) && (sInfo.isJoinable()) && (sInfo.getGameInfos().getName()
 								.equalsIgnoreCase(TSSpigot.getCurrentServerInfos().getGameInfos().getName()))) {
-							serverTypeCount++; }
+							serverTypeCount++;
+						}
 					}
 					if (serverTypeCount >= 2) {
-						Bukkit.getServer().shutdown(); } else { inactifTime = 0; }
+						Bukkit.getServer().shutdown();
+					} else {
+						inactifTime = 0;
+					}
 				}
 			}
 
