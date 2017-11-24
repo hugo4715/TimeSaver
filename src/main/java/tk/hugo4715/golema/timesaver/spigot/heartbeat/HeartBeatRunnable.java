@@ -25,7 +25,7 @@ public class HeartBeatRunnable extends BukkitRunnable {
 			}
 
 			// Serveur innactif trop longtemps. (timeout)
-			if (inactifTime == 30) {
+			if (inactifTime >= 30) {
 				if (!(TimeSaverAPI.getServerInfoList().isEmpty())) {
 					int serverTypeCount = 0;
 					for (ServerInfo sInfo : TimeSaverAPI.getServerInfoList()) {
