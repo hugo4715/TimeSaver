@@ -14,7 +14,8 @@ import tk.hugo4715.golema.timesaver.spigot.TSSpigot;
 public class HeartBeatRunnable extends BukkitRunnable {
 
 	private int inactifTime = 0;
-
+	private int crashTime = 0;
+	
 	public HeartBeatRunnable() {}
 
 	public void run() {
@@ -23,7 +24,8 @@ public class HeartBeatRunnable extends BukkitRunnable {
 			if (Bukkit.getOnlinePlayers().size() > 0) {
 				inactifTime = 0;
 			}
-
+			crashTime = 0;
+			
 			// Serveur innactif trop longtemps. (timeout)
 			if (inactifTime >= 30) {
 				if (!(TimeSaverAPI.getServerInfoList().isEmpty())) {
@@ -51,6 +53,9 @@ public class HeartBeatRunnable extends BukkitRunnable {
 				j.set(key, TSSpigot.get().getCommon().getGson().toJson(TSSpigot.getCurrentServerInfos()));
 				j.expire(key, 30);
 			}
+		} else {
+			if(crashTime == 15) { Bukkit.getServer().shutdown(); }
+			crashTime++;
 		}
 		inactifTime++;
 	}
