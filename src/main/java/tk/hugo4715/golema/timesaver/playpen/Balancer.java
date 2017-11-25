@@ -1,8 +1,5 @@
 package tk.hugo4715.golema.timesaver.playpen;
 
-import java.util.UUID;
-
-import org.apache.logging.log4j.core.config.plugins.ResolverUtil.IsA;
 import org.json.JSONException;
 
 import tk.hugo4715.golema.timesaver.server.GameInfos;

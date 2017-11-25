@@ -35,7 +35,7 @@ public class TSSpigot extends JavaPlugin {
 		idPool = new JedisIdPool(getCommon().getJedisAccess());
 
 		// launch hearthbeat runnable
-		heartBeatTask = new HeartBeatRunnable().runTaskTimerAsynchronously(this, 40L, 20L);
+		heartBeatTask = new HeartBeatRunnable().runTaskTimerAsynchronously(this, 40L, 40L);
 		registerServer();
 	}
 
