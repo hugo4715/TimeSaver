@@ -1,5 +1,8 @@
 package tk.hugo4715.golema.timesaver.playpen;
 
+import java.util.UUID;
+
+import org.apache.logging.log4j.core.config.plugins.ResolverUtil.IsA;
 import org.json.JSONException;
 
 import tk.hugo4715.golema.timesaver.server.GameInfos;
@@ -15,17 +18,17 @@ public class Balancer extends Thread {
 		while (!(this.isInterrupted())) {
 			int requestServer = 0;
 			int maxRequest = 4;
+			
 			for (GameInfos gi : GameInfos.values()) {
 				if ((!(gi.equals(GameInfos.NONE))) && (requestServer < maxRequest)) {
 					int available = 0;
 					for (ServerInfo info : TSPlayen.getInstance().getCommon().getAllServers()) {
-						if ((info != null) && (info.getGameInfos().getName() != null)
-								&& (info.getGameInfos().getName().equalsIgnoreCase(gi.getName())) && (info.isJoinable())
-								&& (info.getCurrentPlayers() < info.getMaxPlayers())) {
-							available = available + 1;
+						if ((info != null) && (info.getGameInfos().getName() != null) && (info.getGameInfos().getName().equalsIgnoreCase(gi.getName())) && isAvailable(info)) {
+							available++;
 						}
 					}
-					if ((available == 0) && (requestServer < maxRequest)) {
+					
+					if ((available <= 1) && (requestServer < maxRequest)) {
 						try {
 							TSPlayen.getInstance().startServer(gi.name);
 							requestServer = requestServer + 1;
@@ -43,5 +46,10 @@ public class Balancer extends Thread {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	protected boolean isAvailable(ServerInfo info) {
+		double percentFull = (info.getCurrentPlayers() * 100.0)/(double)info.getMaxPlayers();
+		return info != null && info.isJoinable() && percentFull <= 75; 
 	}
 }
