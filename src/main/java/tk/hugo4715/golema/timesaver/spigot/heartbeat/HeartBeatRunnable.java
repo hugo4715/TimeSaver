@@ -14,20 +14,31 @@ import tk.hugo4715.golema.timesaver.spigot.TSSpigot;
 public class HeartBeatRunnable extends BukkitRunnable {
 
 	private int inactifTime = 0;
-	private int crashTime = 0;
 	
 	public HeartBeatRunnable() {}
 
 	public void run() {
+		
+		// Serveur.
 		if (TSSpigot.getCurrentServerInfos() != null) {
+			
+			// Update du serveur sur Redis.
+			try (Jedis j = TSSpigot.get().getCommon().getJedisAccess().getJedisPool().getResource()) {
+				TSSpigot.getCurrentServerInfos().setCurrentPlayers(Bukkit.getOnlinePlayers().size());
+				TSSpigot.getCurrentServerInfos().setMaxPlayers(Bukkit.getMaxPlayers());
+
+				String key = "TS:SERVERS:" + TSSpigot.getCurrentServerInfos().getId();
+				j.set(key, TSSpigot.get().getCommon().getGson().toJson(TSSpigot.getCurrentServerInfos()));
+				j.expire(key, 30);
+			}
+			
 			// Détection de serveur innactif.
 			if (Bukkit.getOnlinePlayers().size() > 0) {
 				inactifTime = 0;
 			}
-			crashTime = 0;
 			
 			// Serveur innactif trop longtemps. (timeout)
-			if (inactifTime >= 30) {
+			if (inactifTime >= 300) {
 				if (!(TimeSaverAPI.getServerInfoList().isEmpty())) {
 					int serverTypeCount = 0;
 					for (ServerInfo sInfo : TimeSaverAPI.getServerInfoList()) {
@@ -43,20 +54,7 @@ public class HeartBeatRunnable extends BukkitRunnable {
 					}
 				}
 			}
-
-			// Update du serveur sur Redis.
-			try (Jedis j = TSSpigot.get().getCommon().getJedisAccess().getJedisPool().getResource()) {
-				TSSpigot.getCurrentServerInfos().setCurrentPlayers(Bukkit.getOnlinePlayers().size());
-				TSSpigot.getCurrentServerInfos().setMaxPlayers(Bukkit.getMaxPlayers());
-
-				String key = "TS:SERVERS:" + TSSpigot.getCurrentServerInfos().getId();
-				j.set(key, TSSpigot.get().getCommon().getGson().toJson(TSSpigot.getCurrentServerInfos()));
-				j.expire(key, 30);
-			}
-		} else {
-			if(crashTime == 15) { Bukkit.getServer().shutdown(); }
-			crashTime++;
+			inactifTime++;
 		}
-		inactifTime++;
 	}
 }

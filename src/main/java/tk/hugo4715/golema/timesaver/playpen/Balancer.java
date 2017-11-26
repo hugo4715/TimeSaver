@@ -20,12 +20,13 @@ public class Balancer extends Thread {
 				if ((!(gi.equals(GameInfos.NONE))) && (requestServer < maxRequest)) {
 					int available = 0;
 					for (ServerInfo info : TSPlayen.getInstance().getCommon().getAllServers()) {
-						if ((info != null) && (info.getGameInfos().getName() != null) && (info.getGameInfos().getName().equalsIgnoreCase(gi.getName())) && isAvailable(info)) {
+						if ((info != null) && (info.getGameInfos().getName() != null) 
+								&& (info.getGameInfos().getName().equalsIgnoreCase(gi.getName()))) {
 							available++;
 						}
 					}
 					
-					if ((available <= 1) && (requestServer < maxRequest)) {
+					if ((available < 1) && (requestServer < maxRequest)) {
 						try {
 							TSPlayen.getInstance().startServer(gi.name);
 							requestServer = requestServer + 1;
@@ -43,10 +44,5 @@ public class Balancer extends Thread {
 				e.printStackTrace();
 			}
 		}
-	}
-	
-	protected boolean isAvailable(ServerInfo info) {
-		double percentFull = (info.getCurrentPlayers() * 100.0)/(double)info.getMaxPlayers();
-		return info != null && info.isJoinable() && percentFull <= 75; 
 	}
 }
