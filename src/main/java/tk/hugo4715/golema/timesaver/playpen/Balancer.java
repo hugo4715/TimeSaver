@@ -50,6 +50,6 @@ public class Balancer extends Thread {
 		if(gameInfos.getName().equalsIgnoreCase(GameInfos.LOBBY.getName())
 				|| (gameInfos.getName().equalsIgnoreCase(GameInfos.LOBBYSKYWARS.getName()))
 				|| (gameInfos.getName().equalsIgnoreCase(GameInfos.LOBBYSKYRUSH.getName()))) return 1;
-		return 1;
+		return 2;
 	}
 }
