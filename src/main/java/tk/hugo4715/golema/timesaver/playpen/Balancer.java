@@ -23,7 +23,7 @@ public class Balancer extends Thread {
 					for (ServerInfo info : TSPlayen.getInstance().getCommon().getAllServers()) {
 						if(info == null)continue;
 						
-						if (!info.getType().equals(ServerType.HOST) && info.getGameInfos().getName().equalsIgnoreCase(gi.getName())) {
+						if (info.isJoinable() && !info.getType().equals(ServerType.HOST) && info.getGameInfos().getName().equalsIgnoreCase(gi.getName())) {
 							available++;
 						}
 					}
