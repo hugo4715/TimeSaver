@@ -26,7 +26,7 @@ public class Balancer extends Thread {
 						}
 					}
 					
-					if ((available < 1) && (requestServer < maxRequest)) {
+					if ((available < needAvailable(gi)) && (requestServer < maxRequest)) {
 						try {
 							TSPlayen.getInstance().startServer(gi.name);
 							requestServer = requestServer + 1;
@@ -44,5 +44,12 @@ public class Balancer extends Thread {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public int needAvailable(GameInfos gameInfos) {
+		if(gameInfos.getName().equalsIgnoreCase(GameInfos.LOBBY.getName())
+				|| (gameInfos.getName().equalsIgnoreCase(GameInfos.LOBBYSKYWARS.getName()))
+				|| (gameInfos.getName().equalsIgnoreCase(GameInfos.LOBBYSKYRUSH.getName()))) return 1;
+		return 1;
 	}
 }
