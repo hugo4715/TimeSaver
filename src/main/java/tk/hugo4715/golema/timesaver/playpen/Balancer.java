@@ -4,6 +4,7 @@ import org.json.JSONException;
 
 import tk.hugo4715.golema.timesaver.server.GameInfos;
 import tk.hugo4715.golema.timesaver.server.ServerInfo;
+import tk.hugo4715.golema.timesaver.server.ServerType;
 
 @SuppressWarnings("static-access")
 public class Balancer extends Thread {
@@ -20,8 +21,9 @@ public class Balancer extends Thread {
 				if ((!(gi.equals(GameInfos.NONE))) && (requestServer < maxRequest)) {
 					int available = 0;
 					for (ServerInfo info : TSPlayen.getInstance().getCommon().getAllServers()) {
-						if ((info != null) && (info.getGameInfos().getName() != null) 
-								&& (info.getGameInfos().getName().equalsIgnoreCase(gi.getName()))) {
+						if(info == null)continue;
+						
+						if (!info.getType().equals(ServerType.HOST) && info.getGameInfos().getName().equalsIgnoreCase(gi.getName())) {
 							available++;
 						}
 					}
