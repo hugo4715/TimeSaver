@@ -43,7 +43,7 @@ public class Balancer extends Thread {
 			}
 			
 			try {
-				Thread.sleep(12 * 1000);
+				Thread.sleep(15 * 1000);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			} catch (InterruptedException e) {
