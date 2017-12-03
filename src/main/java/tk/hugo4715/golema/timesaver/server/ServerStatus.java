@@ -1,6 +1,7 @@
 package tk.hugo4715.golema.timesaver.server;
 
 public enum ServerStatus {
+	
     NONE(-1, "inconnue", -1), 
     REBOOT(0, "Reboot", -1), 
     ALLOW(1, "Allow", 0), 
