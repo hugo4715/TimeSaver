@@ -9,25 +9,30 @@ import tk.hugo4715.golema.timesaver.server.ServerType;
 @SuppressWarnings("static-access")
 public class Balancer extends Thread {
 
-	public Balancer() {}
+	public Balancer() {
+	}
 
 	@Override
 	public void run() {
 		while (!(this.isInterrupted())) {
 			int requestServer = 0;
 			int maxRequest = 4;
-			
+
 			for (GameInfos gi : GameInfos.values()) {
 				if ((!(gi.equals(GameInfos.NONE))) && (requestServer < maxRequest)) {
 					int available = 0;
 					for (ServerInfo info : TSPlayen.getInstance().getCommon().getAllServers()) {
-						if(info == null)continue;
-						
-						if (info.isJoinable() && !info.getType().equals(ServerType.HOST) && info.getGameInfos().getName().equalsIgnoreCase(gi.getName())) {
+						if (info == null)
+							continue;
+
+						if (info.isJoinable()
+								&& ((info.getType().equals(ServerType.LOBBY))
+										|| (info.getType().equals(ServerType.GAME)))
+								&& info.getGameInfos().getName().equalsIgnoreCase(gi.getName())) {
 							available++;
 						}
 					}
-					
+
 					if ((available < needAvailable(gi)) && (requestServer < maxRequest)) {
 						try {
 							TSPlayen.getInstance().startServer(gi.name);
@@ -47,11 +52,12 @@ public class Balancer extends Thread {
 			}
 		}
 	}
-	
+
 	public int needAvailable(GameInfos gameInfos) {
-		if(gameInfos.getName().equalsIgnoreCase(GameInfos.LOBBY.getName())
+		if (gameInfos.getName().equalsIgnoreCase(GameInfos.LOBBY.getName())
 				|| (gameInfos.getName().equalsIgnoreCase(GameInfos.LOBBYSKYWARS.getName()))
-				|| (gameInfos.getName().equalsIgnoreCase(GameInfos.LOBBYSKYRUSH.getName()))) return 1;
-		return 2;
+				|| (gameInfos.getName().equalsIgnoreCase(GameInfos.LOBBYSKYRUSH.getName())))
+			return 1;
+		return 1;
 	}
 }
