@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -55,15 +56,12 @@ public class TimeSaverCommon implements Closeable {
 		List<ServerInfo> s = new ArrayList<>();
 
 		try (Jedis j = getJedisAccess().getJedisPool().getResource()) {
-			Set<String> ids = j.smembers("TS:IDPOOL");
-			if (ids != null) {
-				int[] i = new int[ids.size()];
-				for (int k = 0; k < i.length; k++) {
-					i[k] = Integer.valueOf(k);
-				}
-
-				s.addAll(getServer(i));
+			List<Integer> ids = j.smembers("TS:IDPOOL").stream().map(str -> Integer.valueOf(str)).collect(Collectors.toList());
+			int[] i = new int[ids.size()];
+			for (int k = 0; k < i.length; k++) {
+				i[k] = ids.get(k);
 			}
+			s.addAll(getServer(i));
 		}
 		return s;
 	}

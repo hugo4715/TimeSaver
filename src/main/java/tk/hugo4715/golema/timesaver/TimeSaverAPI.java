@@ -11,6 +11,8 @@ import tk.hugo4715.golema.timesaver.spigot.TSSpigot;
 
 public class TimeSaverAPI {
 
+	private TimeSaverAPI(){};
+	
 	/**
 	 * Définir le Status du Serveur.
 	 * 

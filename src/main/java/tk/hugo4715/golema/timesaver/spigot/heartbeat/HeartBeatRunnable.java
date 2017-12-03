@@ -41,7 +41,7 @@ public class HeartBeatRunnable extends BukkitRunnable {
 		}
 
 		// Détection de serveur innactif.
-		if (Bukkit.getOnlinePlayers().size() > 0) {
+		if (!Bukkit.getOnlinePlayers().isEmpty()) {
 			inactifTime = 0;
 		}
 
