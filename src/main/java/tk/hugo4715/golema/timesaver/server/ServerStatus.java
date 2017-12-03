@@ -10,12 +10,10 @@ public enum ServerStatus {
     STAFF(4, "Staff", 50), 
     INGAME(6, "InGame", -1), 
     INGAMEVIP(7, "InGameVIP", -1), 
-    INHOST(8, "InHost", 0), 
+    HOST(8, "Host", 0), 
     WHITELIST(9, "Whitelist", 50), 
     DEVELOPPEMENT(10, "Developpement", 50), 
-    PRIVATE(11, "Private", 100), 
-    EVENTS(11, "Event", 100), 
-    EVENTSVIP(11, "EventVIP", -1);
+    PRIVATE(11, "Private", 100);
     
 	public Integer id;
 	public String name;

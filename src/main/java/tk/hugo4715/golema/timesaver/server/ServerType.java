@@ -7,7 +7,6 @@ public enum ServerType {
     CONNECTOR(1, "Connector"), 
     DEVELOPPEMENT(2, "Developpement"), 
     BUILD(3, "Build"), 
-    PROXY(4, "Proxy"), 
     LOBBY(5, "Lobby"), 
     GAME(6, "Game"), 
     HOST(7, "Host");

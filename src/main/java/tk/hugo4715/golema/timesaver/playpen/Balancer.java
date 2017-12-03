@@ -6,11 +6,9 @@ import tk.hugo4715.golema.timesaver.server.GameInfos;
 import tk.hugo4715.golema.timesaver.server.ServerInfo;
 import tk.hugo4715.golema.timesaver.server.ServerType;
 
-@SuppressWarnings("static-access")
 public class Balancer extends Thread {
 
-	public Balancer() {
-	}
+	public Balancer() {}
 
 	@Override
 	public void run() {
@@ -19,32 +17,33 @@ public class Balancer extends Thread {
 			int maxRequest = 4;
 
 			for (GameInfos gi : GameInfos.values()) {
-				if ((!(gi.equals(GameInfos.NONE))) && (requestServer < maxRequest)) {
-					int available = 0;
-					for (ServerInfo info : TSPlayen.getInstance().getCommon().getAllServers()) {
-						if (info == null)
-							continue;
-
-						if (info.isJoinable()
-								&& ((info.getType().getName().equalsIgnoreCase(ServerType.LOBBY.getName()))
-										|| (info.getType().getName().equalsIgnoreCase(ServerType.GAME.getName())))
-								&& info.getGameInfos().getName().equalsIgnoreCase(gi.getName())) {
-							available++;
-						}
+				int available = 0;
+				for (ServerInfo info : TSPlayen.getInstance().getCommon().getAllServers()) {
+					if (info == null)
+						continue;
+					
+					// Compteur de serveur disponible.
+					if (info.isJoinable()
+							&& ((info.getType().getName().equalsIgnoreCase(ServerType.LOBBY.getName()))
+									|| (info.getType().getName().equalsIgnoreCase(ServerType.GAME.getName())))
+							&& info.getGameInfos().getName().equalsIgnoreCase(gi.getName())) {
+						available++;
 					}
+				}
 
-					if ((available < 1) && (requestServer < maxRequest)) {
-						try {
-							TSPlayen.getInstance().startServer(gi.name);
-							requestServer = requestServer + 1;
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
+				// Démarrage de Serveur.
+				if ((available == 0) && (requestServer < maxRequest)) {
+					try {
+						TSPlayen.getInstance().startServer(gi.name);
+						requestServer++;
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
 				}
 			}
+			
 			try {
-				this.sleep(20 * 1000);
+				Thread.sleep(12 * 1000);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			} catch (InterruptedException e) {
