@@ -4,7 +4,6 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -54,9 +53,9 @@ public class TimeSaverCommon implements Closeable {
 
 	public List<ServerInfo> getAllServers() {
 		List<ServerInfo> s = new ArrayList<>();
-
 		try (Jedis j = getJedisAccess().getJedisPool().getResource()) {
-			List<Integer> ids = j.smembers("TS:IDPOOL").stream().map(str -> Integer.valueOf(str)).collect(Collectors.toList());
+			List<Integer> ids = j.smembers("TS:IDPOOL").stream().map(str -> Integer.valueOf(str))
+					.collect(Collectors.toList());
 			int[] i = new int[ids.size()];
 			for (int k = 0; k < i.length; k++) {
 				i[k] = ids.get(k);
