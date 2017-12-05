@@ -3,9 +3,7 @@ package tk.hugo4715.golema.timesaver.server;
 public enum GameInfos {
 	
     NONE("inconnue"), 
-    LOBBY("Lobby"), 
-    LOBBYSKYWARS("LobbySkyWars"), 
-    LOBBYSKYRUSH("LobbySkyRush"), 
+    HUB("Hub"), 
     SKYRUSH("SkyRush"),
     SKYTOWER("SkyTower"), 
     SKYWARSSOLONORMAL("SkyWarsSoloNormal"), 
