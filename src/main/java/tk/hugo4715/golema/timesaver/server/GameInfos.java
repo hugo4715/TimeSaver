@@ -5,7 +5,7 @@ public enum GameInfos {
     NONE("inconnue"), 
     HUB("Hub"), 
     SKYRUSH("SkyRush"),
-    SKYTOWER("SkyTower"), 
+    DEFENDER("Defender"), 
     SKYWARSSOLONORMAL("SkyWarsSoloNormal"), 
     SKYWARSSOLOCHEAT("SkyWarsSoloCheat"), 
     SKYWARSTEAMNORMAL("SkyWarsTeamNormal"), 

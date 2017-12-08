@@ -25,7 +25,8 @@ public class Balancer extends Thread {
 					// Compteur de serveur disponible.
 					if (info.isJoinable()
 							&& ((info.getType().getName().equalsIgnoreCase(ServerType.LOBBY.getName()))
-									|| (info.getType().getName().equalsIgnoreCase(ServerType.GAME.getName())))
+									|| (info.getType().getName().equalsIgnoreCase(ServerType.GAME.getName()))
+									|| (info.getType().getName().equalsIgnoreCase(ServerType.DEVELOPPEMENT.getName())))
 							&& info.getGameInfos().getName().equalsIgnoreCase(gi.getName())) {
 						available++;
 					}
