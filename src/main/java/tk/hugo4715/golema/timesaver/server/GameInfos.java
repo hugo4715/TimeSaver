@@ -9,7 +9,10 @@ public enum GameInfos {
     SKYWARSSOLONORMAL("SkyWarsSoloNormal"), 
     SKYWARSSOLOCHEAT("SkyWarsSoloCheat"), 
     SKYWARSTEAMNORMAL("SkyWarsTeamNormal"), 
-    SKYWARSTEAMCHEAT("SkyWarsTeamCheat"), 
+    SKYWARSTEAMCHEAT("SkyWarsTeamCheat"),
+    BEDWARSSOLO("BedWarsSolo"),
+    BEDWARSTEAM2X2("BedWarsTeam2X2"),
+    BEDWARSTEAM3X3("BedWarsTeam3X3"),
     GETOUT("GetOut");
     
 	public String name;
