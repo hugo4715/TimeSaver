@@ -10,6 +10,7 @@ public enum GameInfos {
     SKYWARSSOLOCHEAT("SkyWarsSoloCheat"), 
     SKYWARSTEAMNORMAL("SkyWarsTeamNormal"), 
     SKYWARSTEAMCHEAT("SkyWarsTeamCheat"),
+    BEDWARSDUEL("BedWarsDuel"),
     BEDWARSSOLO("BedWarsSolo"),
     BEDWARSTEAM2X2("BedWarsTeam2X2"),
     BEDWARSTEAM3X3("BedWarsTeam3X3"),
