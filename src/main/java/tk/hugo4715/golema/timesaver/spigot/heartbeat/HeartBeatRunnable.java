@@ -49,13 +49,12 @@ public class HeartBeatRunnable extends BukkitRunnable {
 									|| (sInfo.getType().getName().equalsIgnoreCase(ServerType.GAME.getName())))) {
 						serverTypeCount++;
 					}
-					
-					if (serverTypeCount > sInfo.getGameInfos().getNeedServer()) {
-						Bukkit.getServer().shutdown();
-					} else {
-						inactifTime = 0;
-					} 
 				}
+				if (serverTypeCount > 1) {
+					Bukkit.getServer().shutdown();
+				} else {
+					inactifTime = 0;
+				} 
 			}
 			inactifTime++;
 		}
