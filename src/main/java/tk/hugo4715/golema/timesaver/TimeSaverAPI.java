@@ -54,7 +54,7 @@ public class TimeSaverAPI {
 	 */
 	public static void setJoinable(boolean value) {
 		TSSpigot.getCurrentServerInfos().setJoinable(value);
-	}
+	} 
 
 	/**
 	 * Définir la Whitelist du Serveur.

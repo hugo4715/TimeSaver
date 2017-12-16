@@ -21,7 +21,7 @@ public class Balancer extends Thread {
 				for (ServerInfo info : TSPlayen.getInstance().getCommon().getAllServers()) {
 					if (info == null)
 						continue;
-					
+
 					// Compteur de serveur disponible.
 					if (info.isJoinable()
 							&& ((info.getType().getName().equalsIgnoreCase(ServerType.LOBBY.getName()))
@@ -33,7 +33,7 @@ public class Balancer extends Thread {
 				}
 
 				// Démarrage de Serveur.
-				if ((available == 0) && (requestServer < maxRequest)) {
+				if ((available != gi.getNeedServer()) && (requestServer < maxRequest)) {
 					try {
 						TSPlayen.getInstance().startServer(gi.name);
 						requestServer++;
@@ -42,7 +42,7 @@ public class Balancer extends Thread {
 					}
 				}
 			}
-			
+
 			try {
 				Thread.sleep(8 * 1000);
 			} catch (JSONException e) {

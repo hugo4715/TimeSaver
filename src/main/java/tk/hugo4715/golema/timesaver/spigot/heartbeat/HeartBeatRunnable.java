@@ -54,7 +54,7 @@ public class HeartBeatRunnable extends BukkitRunnable {
 					Bukkit.getServer().shutdown();
 				} else {
 					inactifTime = 0;
-				}
+				} 
 			}
 			inactifTime++;
 		}

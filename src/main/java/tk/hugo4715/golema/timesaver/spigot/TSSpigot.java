@@ -47,13 +47,13 @@ public class TSSpigot extends JavaPlugin {
 			UUID coordinator = UUID.fromString(getConfig().getString("coordinator-uuid"));
 			currentServerInfos = new ServerInfo(ServerType.NONE, idPool.nextId(), Bukkit.getMaxPlayers(),
 					Bukkit.getOnlinePlayers().size(), Bukkit.getIp(), Bukkit.getPort(), uuid, coordinator,
-					ServerStatus.REBOOT, GameInfos.NONE, null, false, WhiteListType.NONE, null);
+					ServerStatus.REBOOT, GameInfos.NONE, null, false, WhiteListType.NONE, null, false);
 
 		} catch (Exception e) {
 			System.out.println("[Coordinator] Erreur des UUIDS.");
 			currentServerInfos = new ServerInfo(ServerType.NONE, idPool.nextId(), Bukkit.getMaxPlayers(),
 					Bukkit.getOnlinePlayers().size(), Bukkit.getIp(), Bukkit.getPort(), UUID.randomUUID(),
-					UUID.randomUUID(), ServerStatus.REBOOT, GameInfos.NONE, null, false, WhiteListType.NONE, null);
+					UUID.randomUUID(), ServerStatus.REBOOT, GameInfos.NONE, null, false, WhiteListType.NONE, null, false);
 		}
 	}
 

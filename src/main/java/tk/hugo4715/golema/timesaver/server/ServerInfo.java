@@ -23,10 +23,11 @@ public class ServerInfo {
 	private WhiteListType whitelistType;
 	// hosts
 	private String hostName;
+	private boolean isVersion1_9;
 
 	public ServerInfo(ServerType type, int id, int maxPlayers, int currentPlayers, String ip, int port, UUID uuid,
 			UUID coordinatorUUID, ServerStatus status, GameInfos gameInfos, String map, boolean isJoinable,
-			WhiteListType whitelistType, String hostName) {
+			WhiteListType whitelistType, String hostName, boolean isVersion1_9) {
 		this.type = type;
 		this.id = id;
 		this.maxPlayers = maxPlayers;
@@ -41,6 +42,7 @@ public class ServerInfo {
 		this.isJoinable = isJoinable;
 		this.whitelistType = whitelistType;
 		this.hostName = hostName;
+		this.isVersion1_9 = isVersion1_9;
 	}
 
 	public ServerType getType() {
@@ -153,6 +155,14 @@ public class ServerInfo {
 
 	public void setHostName(String hostName) {
 		this.hostName = hostName;
+	}
+
+	public boolean isVersion1_9() {
+		return isVersion1_9;
+	}
+
+	public void setVersion1_9(boolean isVersion1_9) {
+		this.isVersion1_9 = isVersion1_9;
 	}
 
 	public String getFullName() {
