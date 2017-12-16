@@ -4,7 +4,7 @@ public enum GameInfos {
 	
     NONE("inconnue", 0), 
     HUB("Hub", 1), 
-    SKYRUSH("SkyRush", 2),
+    SKYRUSH("SkyRush", 1),
     DEFENDER("Defender", 1), 
     SKYWARSSOLONORMAL("SkyWarsSoloNormal", 1), 
     SKYWARSSOLOCHEAT("SkyWarsSoloCheat", 2), 
