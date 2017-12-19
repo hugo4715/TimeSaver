@@ -13,8 +13,7 @@ public enum GameInfos {
     BEDWARSDUEL("BedWarsDuel", 1),
     BEDWARSSOLO("BedWarsSolo", 1),
     BEDWARSTEAM2X2("BedWarsTeam2X2", 1),
-    BEDWARSTEAM3X3("BedWarsTeam3X3", 1),
-    GETOUT("GetOut", 1);
+    BEDWARSTEAM3X3("BedWarsTeam3X3", 1);
     
 	public String name;
 	public int needServer;
